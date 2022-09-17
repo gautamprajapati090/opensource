@@ -1,0 +1,122 @@
+import React, { useState, useEffect, useContext, useRef } from 'react';
+import { Registration } from '../components';
+import { StyleSheet, View, Alert } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
+
+import i18n from 'i18n-js';
+import { FirebaseContext } from 'common/src';
+
+export default function RegistrationPage(props) {
+  const { api } = useContext(FirebaseContext);
+  const {
+    emailSignUp,
+    validateReferer,
+    checkUserExists,
+    signIn
+  } = api;
+  const auth = useSelector(state => state.auth);
+  const [loading, setLoading] = useState(false);
+  const cars = useSelector(state => state.cartypes.cars);
+  const settings = useSelector(state => state.settingsdata.settings);
+  const [carTypes, setCarTypes] = useState(null);
+  const dispatch = useDispatch();
+  const pageActive = useRef(false);
+
+  const { t } = i18n;
+
+  useEffect(() => {
+    if (cars) {
+      let arr = [];
+      for (let i = 0; i < cars.length; i++) {
+        arr.push({ label: cars[i].name, value: cars[i].name });
+      }
+      setCarTypes(arr);
+    }
+  }, [cars]);
+
+  useEffect(() => {
+    if (auth.info && pageActive.current) {
+      pageActive.current = false;
+      props.navigation.navigate('AuthLoading');
+      setLoading(false);
+    }
+  }, [auth.info]);
+
+  const clickRegister = async (regData) => {
+    setLoading(true);
+    checkUserExists(regData).then((res) => {
+      if (res.users && res.users.length > 0) {
+        setLoading(false);
+        Alert.alert(t('alert'), t('user_exists'));
+      }
+      else if (res.error) {
+        setLoading(false);
+        Alert.alert(t('alert'), t('email_or_mobile_issue'));
+      }
+      else {
+        if (regData.referralId && regData.referralId.length > 0) {
+          validateReferer(regData.referralId).then((referralInfo) => {
+            if (referralInfo.uid) {
+              emailSignUp({ ...regData, signupViaReferral: referralInfo.uid }).then((res) => {
+                setLoading(false);
+                if (res.uid) {
+                  if (settings.email_verify) {
+                    Alert.alert(t('email_verify_message'))
+                    dispatch(signIn(regData.email, regData.password));
+                  } else {
+                    Alert.alert(t('alert'), t('account_create_successfully'));
+                  }
+                  props.navigation.goBack();
+                } else {
+                  Alert.alert(t('alert'), t('reg_error'));
+                }
+              })
+            } else {
+              setLoading(false);
+              Alert.alert(t('alert'), t('referer_not_found'))
+            }
+          }).catch((error) => {
+            setLoading(false);
+            Alert.alert(t('alert'), t('referer_not_found'))
+          });
+        } else {
+          emailSignUp(regData).then((res) => {
+            setLoading(false);
+            if (res.uid) {
+              if (settings.email_verify) {
+                Alert.alert(t('email_verify_message'))
+                dispatch(signIn(regData.email, regData.password));
+              } else {
+                Alert.alert(t('alert'), t('account_create_successfully'));
+                pageActive.current = true;
+                // dispatch(signIn(regData.email, regData.password));
+              }
+              props.navigation.goBack();
+              // props.navigation.navigate('Login');
+            } else {
+              Alert.alert(t('alert'), t('reg_error'));
+            }
+          })
+        }
+      }
+    });
+  }
+
+  return (
+    <View style={styles.containerView}>
+      {carTypes ?
+        <Registration
+          cars={carTypes}
+          onPressRegister={(regData) => clickRegister(regData)}
+          onPressBack={() => { props.navigation.goBack() }}
+          loading={loading}>
+        </Registration>
+        : null}
+    </View>
+  );
+
+}
+const styles = StyleSheet.create({
+  containerView: { flex: 1 },
+  textContainer: { textAlign: "center" },
+});

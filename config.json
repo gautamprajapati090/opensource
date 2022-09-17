@@ -1,0 +1,17 @@
+{
+    "app_name": "Pink Lady Cabs",
+    "app_description": "Women Empowered",
+    "app_identifier": "com.pinklady.app",
+    "ios_app_version": "1.0.0",
+    "android_app_version": 1,
+    "facebookAppId": "3056176991322446",
+    "firebaseProjectId": "pinklady-love",
+    "googleApiKeys": {
+        "ios": "AIzaSyBzdTXBkHpTLdooSBlbvq2SGmG3SIpIUz8",
+        "android": "AIzaSyBzdTXBkHpTLdooSBlbvq2SGmG3SIpIUz8",
+        "web": "AIzaSyBzdTXBkHpTLdooSBlbvq2SGmG3SIpIUz8",
+        "server": "AIzaSyBzdTXBkHpTLdooSBlbvq2SGmG3SIpIUz8"
+    },
+    "CodeCanyon_Purchase_Code": "bb3fbda3-b190-4f64-9385-c8db64806745"
+}
+

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>1062088394407-jtml4sa2e22i03k0k9sqip3oc180q986.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.1062088394407-jtml4sa2e22i03k0k9sqip3oc180q986</string>
+	<key>API_KEY</key>
+	<string>AIzaSyA-HxZ9bza8mLPRk8Jyuu99RY2nozW2a80</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1062088394407</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.pinklady.app</string>
+	<key>PROJECT_ID</key>
+	<string>pinklady-love</string>
+	<key>STORAGE_BUCKET</key>
+	<string>pinklady-love.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1062088394407:ios:bb01709df4a5598e153d82</string>
+	<key>DATABASE_URL</key>
+	<string>https://pinklady-love-default-rtdb.firebaseio.com</string>
+</dict>
+</plist>
